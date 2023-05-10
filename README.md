@@ -1,0 +1,2 @@
+# kick-sh
+Usefull scripts
