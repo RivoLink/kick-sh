@@ -1,2 +1,2 @@
-# kick-sh
+# quick-sh
 Usefull scripts
