@@ -1,9 +1,18 @@
 <?php
     if(isset($_FILES["file"]) && $_FILES["file"]["error"] == 0){
-        $path = __DIR__.'/'.basename($_FILES["file"]["name"]);
+        $filename = basename($_FILES["file"]["name"]);
+        $filepath = sprintf("%s/%s", __DIR__, $filename);
 
-        if(!move_uploaded_file($_FILES["file"]["tmp_name"], $path)){
-            http_response_code(500);
+        if(isset($_GET["dest"]) && $_GET["dest"]){
+            $filepath = sprintf("%s/%s/%s", __DIR__, $_GET["dest"], $filename);
+        }
+
+        if (!is_dir(dirname($filepath))) {
+            mkdir(dirname($filepath), 0777, true);
+        }
+
+        if(!move_uploaded_file($_FILES["file"]["tmp_name"], $filepath)){
+            http_response_code(500);die;
         }
 
         die();
@@ -25,9 +34,10 @@
 
 <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
 <script>
-    const dropzone = new Dropzone("div.dropzone", {url:"/"});
+    const dropzone = new Dropzone("div.dropzone", {
+        url: "/?dest=<?=$_GET['dest']??null;?>"
+    });
 </script>
 
 </body>
 </html>
-
