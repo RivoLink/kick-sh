@@ -1,2 +1,2 @@
-# quick-sh
-Usefull scripts
+# quick-tools
+Usefull tools
